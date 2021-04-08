@@ -1,0 +1,10 @@
+.searchBar {
+  width: 100%;
+  background-color: rgb(255, 255, 255);
+  padding: 1em;
+  border: 1px rgb(228, 225, 225) solid;
+  border-radius: 5px;
+  &__input {
+    width: 100%
+  }
+}

@@ -1,0 +1,18 @@
+body {
+
+  background-color: rgb(209, 209, 209);
+}
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1em;
+  text-align: center;
+  background-color: rgb(241, 239, 239);
+  min-height: 100vh;
+  .header {
+    padding: 1rem 0;
+    img {
+      max-width: 150px;
+    }
+  }
+}
