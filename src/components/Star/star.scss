@@ -1,0 +1,13 @@
+.star {
+  &__icon {
+    color: rgb(32, 132, 226);
+    font-size: 1.5em;
+    position: absolute;
+    right: 1em;
+    top: 11.5em;
+    &:hover {
+      cursor: pointer;
+      color: lighten(rgb(32, 132, 226), 10%);
+    }
+  }
+}

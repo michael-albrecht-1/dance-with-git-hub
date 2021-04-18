@@ -4,7 +4,30 @@ import 'firebase/firestore';
 const db = firebase.firestore();
 
 const firestoreService = () => {
-  const addUser = (user) => {
+  const checkRepo = (user, repo) => {
+    const docRef = db
+      .collection('users').doc(user.uid)
+      .collection('repos').doc(repo.node_id);
+    console.log(repo);
+    docRef
+      .set({
+        name: repo.name,
+        description: repo.description,
+        owner: {
+          login: repo.owner.login,
+          avatar_url: repo.owner.avatar_url,
+        },
+        html_url: repo.html_url,
+      })
+      .then(() => {
+        console.log('Ajout du repo avec succès !');
+      })
+      .catch((error) => {
+        console.error(`Erreur d'ajout du repo :  ${error}`);
+      });
+  };
+
+  const addUser = (user, repo) => {
     const userRef = db.collection('users');
     userRef.doc(user.uid).set({
       name: user.displayName,
@@ -13,6 +36,7 @@ const firestoreService = () => {
     })
       .then(() => {
         console.log('Utilisateur créé.');
+        checkRepo(user, repo);
       })
       .catch((error) => {
         // The document probably doesn't exist.
@@ -20,7 +44,7 @@ const firestoreService = () => {
       });
   };
 
-  const updateUser = (user) => {
+  const updateUser = (user, repo) => {
     const userRef = db.collection('users').doc(user.uid);
     return userRef.update({
       name: user.displayName,
@@ -29,6 +53,7 @@ const firestoreService = () => {
     })
       .then(() => {
         console.log('Utilisateur mis à jour.');
+        checkRepo(user, repo);
       })
       .catch((error) => {
         // The document probably doesn't exist.
@@ -36,18 +61,18 @@ const firestoreService = () => {
       });
   };
 
-  const checkUser = (user) => {
+  const checkUser = (user, repo) => {
     const docRef = db.collection('users').doc(user.uid);
     docRef.get()
       .then((doc) => {
         if (doc.exists) {
           console.log('Utilisateur existant:', doc.data());
-          updateUser(user);
+          updateUser(user, repo);
         }
         else {
           // doc.data() will be undefined in this case
           console.log('L\'utilisateur n\'existe pas !');
-          addUser(user);
+          addUser(user, repo);
         }
       }).catch((error) => {
         console.log(`Erreur de vérification de l'utilisateur : ${error}`);
@@ -55,26 +80,8 @@ const firestoreService = () => {
   };
 
   const addFavorite = (user, repo) => {
-    // #check if user is auth
-    checkUser(user);
-    // #check if user exist in Firestore
-    // # -> if note create him
-    // # is isStar === false-> add repo in FS favorites
-    // # is isStar === true -> remove it
-    /*
-    db.collection('users')
-      .add({
-        first: 'Ada',
-        last: 'Lovelace',
-        born: 1815,
-      })
-      .then((docRef) => {
-        console.log('Document written with ID: ', docRef.id);
-      })
-      .catch((error) => {
-        console.error('Error adding document: ', error);
-      });
-      */
+    // #check if user exist -> next create or update collection
+    checkUser(user, repo);
   };
 
   return {
