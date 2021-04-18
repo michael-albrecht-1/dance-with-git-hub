@@ -12,15 +12,26 @@ const Star = ({ repo }) => {
   const user = authValue.userState;
 
   const [isStar, setIsStar] = useState(false);
-  const handleStarClick = () => {
-    setIsStar(!isStar);
-    FS.addFavorite(user, repo);
+  const handleAddStarClick = () => {
+    if (user) {
+      FS.addFavorite(user, repo);
+      setIsStar(true);
+    }
+    else {
+      console.log('you should login');
+      window.location.replace('/login');
+    }
+  };
+
+  const handleRemoveStar = () => {
+    console.log('remove star');
+    // # todo
   };
   // by default display empty star
   let star = (
     <i
       className="far fa-star star__icon"
-      onClick={handleStarClick}
+      onClick={handleAddStarClick}
     />
   );
   if (user) {
@@ -29,7 +40,7 @@ const Star = ({ repo }) => {
       star = (
         <i
           className="fas fa-star star__icon"
-          onClick={handleStarClick}
+          onClick={handleRemoveStar}
         />
       );
     }
