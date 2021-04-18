@@ -15,7 +15,9 @@ const Star = ({ repo }) => {
 
   // is favorite repo ?
   useEffect(() => {
-    FS.isStar(user, repo, setIsStar);
+    if (user) {
+      FS.isStar(user, repo, setIsStar);
+    }
   }, []);
 
   // handle add star
