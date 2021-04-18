@@ -2,6 +2,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
+  Redirect,
   Route,
   Switch,
 } from 'react-router-dom';
@@ -30,7 +31,6 @@ const DEFAULT_STATUS = {
 // == Composant
 const App = () => {
   const authValue = useContext(AuthContext);
-  console.log(authValue.userState);
 
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState('');
@@ -101,18 +101,12 @@ const App = () => {
           <Route exact path="/faq">
             <Faq />
           </Route>
-          {
-            authValue.userState ? (
-              <Route exact path="/favoritesRepos">
-                <FavoritesRepos />
-              </Route>
-            )
-              : (
-                <Route exact path="/login">
-                  <Login />
-                </Route>
-              )
-          }
+          <Route exact path="/favoritesRepos">
+            { authValue.userState ? (<FavoritesRepos />) : (<Redirect to="/login" />) }
+          </Route>
+          <Route exact path="/login">
+            <Login />
+          </Route>
           <Route path="*">
             <NotFound />
           </Route>
