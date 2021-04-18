@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+
+import { AuthContext } from 'src/context/AuthContext';
 import { Link } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
 import './Navbar.scss';
 
 const Navbar = () => {
+  const authValue = useContext(AuthContext);
   const [activeItem, setActiveItem] = useState();
   const handleClick = (e, { name }) => setActiveItem(name);
+  console.log(authValue);
+  console.log(authValue.userState);
 
   return (
     <Menu>
@@ -28,6 +33,38 @@ const Navbar = () => {
       >
         Faq
       </Menu.Item>
+      {authValue.userState ? (
+        <>
+          <Menu.Item
+            position="right"
+            color="green"
+            name="username"
+            active={activeItem === 'username'}
+          >
+            {authValue.userState.displayName}
+          </Menu.Item>
+          <Menu.Item
+            position="right"
+            color="green"
+            onClick={authValue.signOut}
+            name="signout"
+            active={activeItem === 'signout'}
+          >
+            Se déconnecter
+          </Menu.Item>
+        </>
+      ) : (
+        <Menu.Item
+          position="right"
+          color="green"
+          as={Link}
+          to="/login"
+          name="login"
+          active={activeItem === 'login'}
+        >
+          Se connecter
+        </Menu.Item>
+      )}
     </Menu>
   );
 };

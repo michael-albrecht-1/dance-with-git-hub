@@ -8,6 +8,7 @@ import {
 import 'semantic-ui-css/semantic.min.css';
 
 // == Import
+import { AuthProvider } from 'src/context/AuthContext';
 import logoGithub from 'src/assets/images/logo-github.png';
 import repoService from 'src/repoService';
 import Faq from '../Faq/Faq';
@@ -17,6 +18,7 @@ import NotFound from '../NotFound/NotFound';
 import ReposResults from '../ReposResults/ReposResults';
 import SearchBar from '../SearchBar/SearchBar';
 import './styles.scss';
+import Login from '../Login/Login';
 
 const DEFAULT_STATUS = {
   label: '',
@@ -71,36 +73,41 @@ const App = () => {
   };
 
   return (
-    <Router>
-      <div className="app">
-        <header className="header">
-          <img src={logoGithub} alt="react logo" />
-          <Navbar />
-        </header>
-        <Switch>
-          <Route exact path="/">
-            <SearchBar
-              handleSubmit={handleSubmit}
-              isLoading={isLoading}
-              search={search}
-              setSearch={(e) => setSearch(e.target.value)}
-            />
-            <Message status={status} resultsCount={resultsCount} />
-            <ReposResults
-              repos={repos}
-              displayMoreResultsButton={displayMoreResultsButton}
-              handleMoreResultsClick={handleMoreResultsClick}
-            />
-          </Route>
-          <Route exact path="/faq">
-            <Faq />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="app">
+          <header className="header">
+            <img src={logoGithub} alt="react logo" />
+            <Navbar />
+          </header>
+          <Switch>
+            <Route exact path="/">
+              <SearchBar
+                handleSubmit={handleSubmit}
+                isLoading={isLoading}
+                search={search}
+                setSearch={(e) => setSearch(e.target.value)}
+              />
+              <Message status={status} resultsCount={resultsCount} />
+              <ReposResults
+                repos={repos}
+                displayMoreResultsButton={displayMoreResultsButton}
+                handleMoreResultsClick={handleMoreResultsClick}
+              />
+            </Route>
+            <Route exact path="/faq">
+              <Faq />
+            </Route>
+            <Route exact path="/login">
+              <Login />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 };
 
