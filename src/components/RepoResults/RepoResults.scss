@@ -7,6 +7,17 @@
   width: 100%;
   background-color: white;
   padding: 16px;
+  position: relative;
+  &__icon {
+    color: rgb(32, 132, 226);
+    font-size: 1.5em;
+    position: absolute;
+    right: 1em;
+    top: 11.5em;
+    &:hover {
+      cursor: pointer;
+    }
+  }
   &__img {
     width: 100%;
     display: flex;
