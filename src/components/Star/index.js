@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { AuthContext } from 'src/context/AuthContext';
@@ -12,6 +12,13 @@ const Star = ({ repo }) => {
   const user = authValue.userState;
 
   const [isStar, setIsStar] = useState(false);
+
+  // is favorite repo ?
+  useEffect(() => {
+    FS.isStar(user, repo, setIsStar);
+  }, []);
+
+  // handle add star
   const handleAddStarClick = () => {
     if (user) {
       FS.addFavorite(user, repo);
@@ -23,6 +30,7 @@ const Star = ({ repo }) => {
     }
   };
 
+  // handle remove star
   const handleRemoveStar = () => {
     console.log('remove star');
     // # todo

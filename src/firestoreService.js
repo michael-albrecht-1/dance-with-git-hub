@@ -61,6 +61,7 @@ const firestoreService = () => {
       });
   };
 
+  // check if user is already in register
   const checkUser = (user, repo) => {
     const docRef = db.collection('users').doc(user.uid);
     docRef.get()
@@ -79,6 +80,26 @@ const firestoreService = () => {
       });
   };
 
+  // return bool saying if the repo is a favorite
+  const isStar = (user, repo, setIsStar) => {
+    const docRef = db
+      .collection('users').doc(user.uid)
+      .collection('repos').doc(repo.node_id);
+
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        console.log(`Document data: ${doc.data()}`);
+        setIsStar(true);
+      }
+      else {
+        // doc.data() will be undefined in this case
+        console.log('No such document!');
+      }
+    }).catch((error) => {
+      console.log(`Error getting document: ${error}`);
+    });
+  };
+
   const addFavorite = (user, repo) => {
     // #check if user exist -> next create or update collection
     checkUser(user, repo);
@@ -86,6 +107,7 @@ const firestoreService = () => {
 
   return {
     addFavorite,
+    isStar,
   };
 };
 
