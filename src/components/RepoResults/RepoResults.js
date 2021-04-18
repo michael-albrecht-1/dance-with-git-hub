@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { AuthContext } from 'src/context/AuthContext';
 import './RepoResults.scss';
+import firestoreService from '../../firestoreService';
 
 const RepoResults = ({ repo }) => {
+  const FS = firestoreService();
   const [isStar, setIsStar] = useState(false);
-  const handleStarClick = () => setIsStar(!isStar);
+  const authValue = useContext(AuthContext);
+  const user = authValue.userState;
+  const handleStarClick = () => {
+    // #check if user is auth
+    // #check if user exist in Firestore
+    // # -> if note create him
+    // # is isStar === false-> add repo in FS favorites
+    // # is isStar === true -> remove it
+    setIsStar(!isStar);
+    FS.addFavorite(user, repo);
+  };
+
+  // console.log(repo);
+
   return (
     <div className="repo">
       {
