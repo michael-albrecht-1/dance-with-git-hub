@@ -1,5 +1,5 @@
 // == Import npm
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -8,7 +8,7 @@ import {
 import 'semantic-ui-css/semantic.min.css';
 
 // == Import
-import { AuthProvider } from 'src/context/AuthContext';
+import { AuthContext } from 'src/context/AuthContext';
 import logoGithub from 'src/assets/images/logo-github.png';
 import repoService from 'src/repoService';
 import Faq from '../Faq/Faq';
@@ -19,6 +19,7 @@ import ReposResults from '../ReposResults/ReposResults';
 import SearchBar from '../SearchBar/SearchBar';
 import './styles.scss';
 import Login from '../Login/Login';
+import FavoritesRepos from '../FavortitesRepos';
 
 const DEFAULT_STATUS = {
   label: '',
@@ -28,6 +29,9 @@ const DEFAULT_STATUS = {
 
 // == Composant
 const App = () => {
+  const authValue = useContext(AuthContext);
+  console.log(authValue.userState);
+
   const [isLoading, setIsLoading] = useState(false);
   const [search, setSearch] = useState('');
 
@@ -73,41 +77,48 @@ const App = () => {
   };
 
   return (
-    <AuthProvider>
-      <Router>
-        <div className="app">
-          <header className="header">
-            <img src={logoGithub} alt="react logo" />
-            <Navbar />
-          </header>
-          <Switch>
-            <Route exact path="/">
-              <SearchBar
-                handleSubmit={handleSubmit}
-                isLoading={isLoading}
-                search={search}
-                setSearch={(e) => setSearch(e.target.value)}
-              />
-              <Message status={status} resultsCount={resultsCount} />
-              <ReposResults
-                repos={repos}
-                displayMoreResultsButton={displayMoreResultsButton}
-                handleMoreResultsClick={handleMoreResultsClick}
-              />
-            </Route>
-            <Route exact path="/faq">
-              <Faq />
-            </Route>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route path="*">
-              <NotFound />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </AuthProvider>
+    <Router>
+      <div className="app">
+        <header className="header">
+          <img src={logoGithub} alt="react logo" />
+          <Navbar />
+        </header>
+        <Switch>
+          <Route exact path="/">
+            <SearchBar
+              handleSubmit={handleSubmit}
+              isLoading={isLoading}
+              search={search}
+              setSearch={(e) => setSearch(e.target.value)}
+            />
+            <Message status={status} resultsCount={resultsCount} />
+            <ReposResults
+              repos={repos}
+              displayMoreResultsButton={displayMoreResultsButton}
+              handleMoreResultsClick={handleMoreResultsClick}
+            />
+          </Route>
+          <Route exact path="/faq">
+            <Faq />
+          </Route>
+          {
+            authValue.userState ? (
+              <Route exact path="/favoritesRepos">
+                <FavoritesRepos />
+              </Route>
+            )
+              : (
+                <Route exact path="/login">
+                  <Login />
+                </Route>
+              )
+          }
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 };
 

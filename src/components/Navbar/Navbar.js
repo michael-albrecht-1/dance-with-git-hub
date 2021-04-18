@@ -10,8 +10,6 @@ const Navbar = () => {
   const authValue = useContext(AuthContext);
   const [activeItem, setActiveItem] = useState();
   const handleClick = (e, { name }) => setActiveItem(name);
-  console.log(authValue);
-  console.log(authValue.userState);
 
   return (
     <Menu>
@@ -24,6 +22,18 @@ const Navbar = () => {
       >
         Recherche
       </Menu.Item>
+
+      {(authValue.userState) && (
+        <Menu.Item
+          as={Link}
+          to="/favoritesRepos"
+          name="favoritesRepos"
+          active={activeItem === 'favoritesRepos'}
+          onClick={handleClick}
+        >
+          Favoris
+        </Menu.Item>
+      )}
       <Menu.Item
         as={Link}
         to="/faq"

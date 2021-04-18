@@ -22,7 +22,6 @@ export const AuthProvider = (props) => {
 
     useEffect(() => {
         return auth.onAuthStateChanged((userAuth) => {
-            console.log(userAuth);
             setUserState(userAuth);
             setAuthPending(false);
         })
