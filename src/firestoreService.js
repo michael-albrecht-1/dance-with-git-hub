@@ -27,7 +27,7 @@ const firestoreService = () => {
       });
   };
 
-  const removeRepo = (user, repo) => {
+  const removeFavorite = (user, repo) => {
     db
       .collection('users').doc(user.uid)
       .collection('repos').doc(repo.node_id)
@@ -75,7 +75,9 @@ const firestoreService = () => {
   };
 
   // check if user is already in register
-  const checkUser = (user, repo) => {
+  // then update with data frome google acc ? to refacto if it is not a google account
+  // next add the current repo to user favorites
+  const addFavorite = (user, repo) => {
     const docRef = db.collection('users').doc(user.uid);
     docRef.get()
       .then((doc) => {
@@ -113,11 +115,6 @@ const firestoreService = () => {
     });
   };
 
-  const addFavorite = (user, repo) => {
-    // #check if user exist -> next create or update collection
-    checkUser(user, repo);
-  };
-
   const getFavoritesRepos = (user, favoritesRepos) => {
     console.log('enter get fav repos');
     console.log(user.email);
@@ -153,7 +150,7 @@ const firestoreService = () => {
     addFavorite,
     isStar,
     getFavoritesRepos,
-    removeRepo,
+    removeFavorite,
   };
 };
 
