@@ -4,7 +4,7 @@ import 'firebase/firestore';
 const db = firebase.firestore();
 
 const firestoreService = () => {
-  const checkRepo = (user, repo) => {
+  const addRepo = (user, repo) => {
     const docRef = db
       .collection('users').doc(user.uid)
       .collection('repos').doc(repo.node_id);
@@ -36,7 +36,7 @@ const firestoreService = () => {
     })
       .then(() => {
         console.log('Utilisateur créé.');
-        checkRepo(user, repo);
+        addRepo(user, repo);
       })
       .catch((error) => {
         // The document probably doesn't exist.
@@ -53,7 +53,7 @@ const firestoreService = () => {
     })
       .then(() => {
         console.log('Utilisateur mis à jour.');
-        checkRepo(user, repo);
+        addRepo(user, repo);
       })
       .catch((error) => {
         // The document probably doesn't exist.
@@ -105,9 +105,41 @@ const firestoreService = () => {
     checkUser(user, repo);
   };
 
+  const getFavoritesRepos = (user, favoritesRepos) => {
+    console.log('enter get fav repos');
+    console.log(user.email);
+    const docRef = db
+      .collection('users').doc(user.uid)
+      .collection('repos');
+
+    docRef
+      .get()
+      .then((querySnapshot) => {
+        let repos = [];
+        querySnapshot.forEach((doc) => {
+          const repo = doc.data();
+          repos = [...repos, {
+            node_id: doc.id,
+            name: repo.name,
+            description: repo.description,
+            owner: {
+              login: repo.owner.login,
+              avatar_url: repo.owner.avatar_url,
+            },
+            html_url: repo.html_url,
+          }];
+        });
+        favoritesRepos(repos);
+      })
+      .catch((error) => {
+        console.log(`Erreur de recupération des repos: ${error}`);
+      });
+  };
+
   return {
     addFavorite,
     isStar,
+    getFavoritesRepos,
   };
 };
 
