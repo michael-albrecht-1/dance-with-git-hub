@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Icon, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 
 import './RepoResults.scss';
 import Star from '../Star';
 
 const RepoResults = ({ repo }) => (
   <Card>
-    <Image src={repo.owner.avatar_url}  wrapped ui={false} />
+    <Image src={repo.owner.avatar_url} wrapped ui={false} />
     <Card.Content>
-      <Card.Header>{repo.name}</Card.Header>
+      <Card.Header href={repo.html_url}>{repo.name}</Card.Header>
       <Card.Meta>
-        <span className='date'>by {repo.owner.login}</span>
+        <span className="date">by {repo.owner.login}</span>
       </Card.Meta>
       <Card.Description>
         {repo.description}
