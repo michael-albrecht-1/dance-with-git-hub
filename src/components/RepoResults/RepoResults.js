@@ -1,21 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Card, Icon, Image } from 'semantic-ui-react'
 
 import './RepoResults.scss';
 import Star from '../Star';
 
 const RepoResults = ({ repo }) => (
-  <div className="repo">
-    <Star repo={repo} />
-    <a href={repo.html_url}>
-      <div className="repo__img">
-        <img src={repo.owner.avatar_url} alt="auteur" />
-      </div>
-      <h1 className="repo__title">{repo.name}</h1>
-      <p className="repo__author">{repo.owner.login}</p>
-      <p className="repo__description">{repo.description}</p>
-    </a>
-  </div>
+  <Card>
+    <Image src={repo.owner.avatar_url}  wrapped ui={false} />
+    <Card.Content>
+      <Card.Header>{repo.name}</Card.Header>
+      <Card.Meta>
+        <span className='date'>by {repo.owner.login}</span>
+      </Card.Meta>
+      <Card.Description>
+        {repo.description}
+      </Card.Description>
+    </Card.Content>
+    <Card.Content extra>
+      <Star repo={repo} />
+    </Card.Content>
+  </Card>
 );
 
 RepoResults.propTypes = {
