@@ -75,7 +75,7 @@ const firestoreService = () => {
   };
 
   // check if user is already in register
-  // then update with data frome google acc ? to refacto if it is not a google account
+  // then update user
   // next add the current repo to user favorites
   const addFavorite = (user, repo) => {
     const docRef = db.collection('users').doc(user.uid);
@@ -115,7 +115,7 @@ const firestoreService = () => {
     });
   };
 
-  const getFavoritesRepos = (user, favoritesRepos) => {
+  const getFavoritesRepos = (user, setRepos) => {
     console.log('enter get fav repos');
     console.log(user.email);
     const docRef = db
@@ -139,7 +139,7 @@ const firestoreService = () => {
             html_url: repo.html_url,
           }];
         });
-        favoritesRepos(repos);
+        setRepos(repos);
       })
       .catch((error) => {
         console.log(`Erreur de recupération des repos: ${error}`);

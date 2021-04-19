@@ -34,8 +34,8 @@ const Star = ({ repo }) => {
 
   // handle remove star
   const handleRemoveStar = () => {
-    console.log('remove star');
-    // # todo
+    FS.removeFavorite(user, repo);
+    setIsStar(false);
   };
   // by default display empty star
   let star = (

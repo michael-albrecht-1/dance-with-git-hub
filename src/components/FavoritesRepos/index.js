@@ -10,19 +10,25 @@ const FavoritesRepos = () => {
   const authValue = useContext(AuthContext);
   const user = authValue.userState;
 
-  const [repos, setRepos] = useState({});
+  const [repos, setRepos] = useState([]);
 
-  // is favorite repo ?
   useEffect(() => {
-    FS.getFavoritesRepos(user, setRepos);
-  }, [repos, user]);
+    let isMounted = true;
 
-  console.table(repos);
-  // const reposList = repos.map((r) => <RepoResults key={r.id} repo={r} />);
+    if (isMounted) {
+      FS.getFavoritesRepos(user, setRepos);
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const reposList = repos.map((repo) => <RepoResults key={repo.node_id} repo={repo} />);
 
   return (
     <div className="favorites">
-      daz
+      {reposList}
     </div>
   );
 };

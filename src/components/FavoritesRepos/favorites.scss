@@ -1,0 +1,10 @@
+.favorites {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1em;
+  justify-content: space-between;
+
+  .button {
+    margin: 2em auto,
+  }
+}
