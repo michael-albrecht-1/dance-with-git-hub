@@ -2,7 +2,9 @@ import React, { useContext, useState } from 'react';
 
 import { AuthContext } from 'src/context/AuthContext';
 import { Link } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
+import {
+  Dropdown, Icon, Menu, Segment,
+} from 'semantic-ui-react';
 
 import './Navbar.scss';
 
@@ -35,6 +37,7 @@ const Navbar = () => {
         </Menu.Item>
       )}
       <Menu.Item
+        position="right"
         as={Link}
         to="/faq"
         name="Faq"
@@ -45,23 +48,18 @@ const Navbar = () => {
       </Menu.Item>
       {authValue.userState ? (
         <>
-          <Menu.Item
-            position="right"
-            color="green"
-            name="username"
-            active={activeItem === 'username'}
-          >
-            {authValue.userState.displayName}
-          </Menu.Item>
-          <Menu.Item
-            position="right"
-            color="green"
-            onClick={authValue.signOut}
-            name="signout"
-            active={activeItem === 'signout'}
-          >
-            Se déconnecter
-          </Menu.Item>
+          <Dropdown item icon="wrench" simple position="right">
+            <Dropdown.Menu>
+              <Dropdown.Item>{authValue.userState.email}</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item
+                onClick={authValue.signOut}
+                name="signout"
+              >
+                Se déconnecter
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </>
       ) : (
         <Menu.Item

@@ -20,7 +20,7 @@ import ReposResults from '../ReposResults/ReposResults';
 import SearchBar from '../SearchBar/SearchBar';
 import './styles.scss';
 import Login from '../Login/Login';
-import FavoritesRepos from '../FavortitesRepos';
+import FavoritesRepos from '../FavoritesRepos';
 
 const DEFAULT_STATUS = {
   label: '',
