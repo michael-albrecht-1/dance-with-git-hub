@@ -2,9 +2,7 @@ import React, { useContext, useState } from 'react';
 
 import { AuthContext } from 'src/context/AuthContext';
 import { Link } from 'react-router-dom';
-import {
-  Dropdown, Icon, Menu, Segment,
-} from 'semantic-ui-react';
+import { Dropdown, Menu } from 'semantic-ui-react';
 
 import './Navbar.scss';
 
