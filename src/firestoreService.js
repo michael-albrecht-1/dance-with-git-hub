@@ -27,6 +27,19 @@ const firestoreService = () => {
       });
   };
 
+  const removeRepo = (user, repo) => {
+    db
+      .collection('users').doc(user.uid)
+      .collection('repos').doc(repo.node_id)
+      .delete()
+      .then(() => {
+        console.log('Repo supprimé des favoris !');
+      })
+      .catch((error) => {
+        console.error(`Erreur de suppression du repo des favoris :  ${error}`);
+      });
+  };
+
   const addUser = (user, repo) => {
     const userRef = db.collection('users');
     userRef.doc(user.uid).set({
@@ -140,6 +153,7 @@ const firestoreService = () => {
     addFavorite,
     isStar,
     getFavoritesRepos,
+    removeRepo,
   };
 };
 
