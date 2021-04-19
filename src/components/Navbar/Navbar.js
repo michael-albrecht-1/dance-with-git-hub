@@ -46,7 +46,7 @@ const Navbar = () => {
       </Menu.Item>
       {authValue.userState ? (
         <>
-          <Dropdown item icon="wrench" simple position="right">
+          <Dropdown item icon="wrench" simple direction="left">
             <Dropdown.Menu>
               <Dropdown.Item>{authValue.userState.email}</Dropdown.Item>
               <Dropdown.Divider />

@@ -1,11 +1,14 @@
 # Dance with GitHub
 
-Application qui fonctionne avec une véritable API, celle de github !
+Application qui fonctionne avec l'API degithub !
 
-**Objectif**
+**Description**
 
 Annuaire qui permette de chercher des repos sur github
+Pouvoir S'authentifier pour pouvoir liker des repos
 
 **Todo**
 
-Pouvoir S'authentifier pour pouvoir liker des repos
+- style : placer l'étoile correctement
+- le dropdown du menu s'ouvre vers la droite (hors écran sur mobile)
+- afficher les messages emis dans le servcie firebase
