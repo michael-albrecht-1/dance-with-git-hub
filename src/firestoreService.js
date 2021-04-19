@@ -8,7 +8,6 @@ const firestoreService = () => {
     const docRef = db
       .collection('users').doc(user.uid)
       .collection('repos').doc(repo.node_id);
-    console.log(repo);
     docRef
       .set({
         name: repo.name,
@@ -103,12 +102,7 @@ const firestoreService = () => {
 
     docRef.get().then((doc) => {
       if (doc.exists) {
-        console.log(`Document data: ${doc.data()}`);
         setIsStar(true);
-      }
-      else {
-        // doc.data() will be undefined in this case
-        console.log('No such document!');
       }
     }).catch((error) => {
       console.log(`Error getting document: ${error}`);
@@ -116,8 +110,6 @@ const firestoreService = () => {
   };
 
   const getFavoritesRepos = (user, setRepos) => {
-    console.log('enter get fav repos');
-    console.log(user.email);
     const docRef = db
       .collection('users').doc(user.uid)
       .collection('repos');
