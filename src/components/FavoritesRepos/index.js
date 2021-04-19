@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from 'src/context/AuthContext';
 import firestoreService from '../../firestoreService';
+import { Card } from 'semantic-ui-react';
 
 import RepoResults from '../RepoResults/RepoResults';
 import './favorites.scss';
@@ -26,10 +27,19 @@ const FavoritesRepos = () => {
 
   const reposList = repos.map((repo) => <RepoResults key={repo.node_id} repo={repo} />);
 
+  const intViewportWidth = window.innerWidth;
+  let raw = 1;
+  if (intViewportWidth >= 700) {
+    raw = 2;
+  }
+  if (intViewportWidth >= 1000) {
+    raw = 3;
+  }
+
   return (
-    <div className="favorites">
+    <Card.Group itemsPerRow={raw}>
       {reposList}
-    </div>
+    </Card.Group>
   );
 };
 
