@@ -17,6 +17,10 @@ const Faq = () => (
       <h2 className="faq__article__title">Puis-je chercher n'importe quel terme ?</h2>
       <p className="faq__article__body">Oui, c'est fou.</p>
     </article>
+    <article className="faq__article">
+      <h2 className="faq__article__title">A quoi sert l'étoile en bas de la carte d'un dépot ?</h2>
+      <p className="faq__article__body">Elle permet de mettre le dépot dans tes favoris. Tu peux ensuite les consulter dans le menu "favoris".</p>
+    </article>
   </div>
 );
 
